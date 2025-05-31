@@ -1,0 +1,66 @@
+<% if (page.archive) { %>
+    <header class="page-header">
+        <h1><%= __('archive.title') %></h1>
+    </header>
+    
+    <% 
+    var lastYear;
+    var lastMonth;
+    page.posts.each(function(post) {
+        var year = date(post.date, 'YYYY');
+        var month = date(post.date, 'MM');
+        
+        if (lastYear !== year) {
+            lastYear = year;
+            lastMonth = null;
+    %>
+        <div class="archive-year">
+            <h2 class="archive-year-header"><%= year %></h2>
+    <%  }
+        
+        if (lastMonth !== month) {
+            lastMonth = month;
+    %>
+            <div class="archive-month">
+                <h3 class="archive-month-header"><%= date(post.date, 'MMMM') %></h3>
+                <div class="archive-posts">
+    <%  } %>
+                    <div class="archive-entry">
+                        <h3 class="archive-entry-title">
+                            <a href="<%= url_for(post.path) %>"><%= post.title || __('untitled') %></a>
+                        </h3>
+                        <div class="archive-meta">
+                            <span><%= date(post.date, 'YYYY-MM-DD') %></span>
+                            <% if (theme.showReadingTime) { %>
+                            <span><%= Math.ceil(strip_html(post.content).length / 1000) %> <%= __('post.minute') %></span>
+                            <% } %>
+                        </div>
+                    </div>
+    <%
+        var nextPost = page.posts.toArray()[page.posts.data.indexOf(post) + 1];
+        if (!nextPost || date(nextPost.date, 'MM') !== month) {
+    %>
+                </div>
+            </div>
+    <%
+        }
+        
+        if (!nextPost || date(nextPost.date, 'YYYY') !== year) {
+    %>
+        </div>
+    <%
+        }
+    });
+    %>
+    
+    <% if (page.total > 1) { %>
+    <footer class="page-footer">
+        <nav class="pagination">
+            <%- paginator({
+                prev_text: '<span class="prev-text">« ' + __('pagination.prev') + '</span>',
+                next_text: '<span class="next-text">' + __('pagination.next') + ' »</span>'
+            }) %>
+        </nav>
+    </footer>
+    <% } %>
+<% } %>

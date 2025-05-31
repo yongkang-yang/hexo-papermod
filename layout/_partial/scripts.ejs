@@ -1,0 +1,19 @@
+<% if (theme.scripts && theme.scripts.length) { %>
+  <% theme.scripts.forEach(function(url) { %>
+    <script src="<%= url_for(url) %>"></script>
+  <% }); %>
+<% } %>
+
+<script src="<%= url_for('/js/main.js') %>"></script>
+
+<% if (theme.features.search) { %>
+<script src="<%= url_for('/js/search.js') %>"></script>
+<% } %>
+
+<% if (config.prismjs && config.prismjs.enable) { %>
+<script src="<%= url_for('/js/prism.js') %>"></script>
+<% } %>
+
+<% if (theme.code_copy_button && theme.code_copy_button.enable) { %>
+<script src="<%= url_for('/js/code-copy.js') %>"></script>
+<% } %>
