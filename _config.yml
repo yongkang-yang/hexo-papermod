@@ -33,13 +33,13 @@ menu:
 # Social Icons
 social:
   - icon: github
-    url: https://github.com/
+    url: https://github.com/yongkang-yang
     title: GitHub
-  - icon: twitter
-    url: https://twitter.com/
-    title: Twitter
+  - icon: linkedin
+    url: https://www.linkedin.com/in/yongkang-yang-0530a1205/
+    title: LinkedIn
   - icon: rss
-    url: /atom.xml
+    url: https://yongkang-yang.github.io/atom.xml
     title: RSS
 
 # Default cover image
