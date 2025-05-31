@@ -1,48 +1,48 @@
-<% if (page.posts && page.posts.length > 0) { %>
-    <div class="posts-list">
-        <% page.posts.each(function(post) { %>
-            <article class="post-entry">
-                <% if (post.cover || theme.defaultCover) { %>
-                <header class="entry-header">
-                    <h2><%= post.title || __('untitled') %></h2>
-                </header>
-                <div class="entry-cover">
-                    <img src="<%= url_for(post.cover || theme.defaultCover) %>" alt="<%= post.title || __('untitled') %>">
-                </div>
-                <% } else { %>
-                <header class="entry-header">
-                    <h2><%= post.title || __('untitled') %></h2>
-                </header>
-                <% } %>
-                <section class="entry-content">
-                    <p><%= strip_html(post.excerpt || post.content).substring(0, 200).trim() %>...</p>
-                </section>
-                <footer class="entry-footer">
-                    <% if (theme.showReadingTime) { %>
-                    <span title="<%= __('post.reading_time') %>">
-                        <%= Math.ceil(strip_html(post.content).length / 1000) %> <%= __('post.minute') %>
-                    </span>
-                    <% } %>
-                    <span><%= date(post.date, 'YYYY-MM-DD') %></span>
-                </footer>
-                <a class="entry-link" aria-label="<%= __('post.read_more') %>: <%= post.title || __('untitled') %>" href="<%= url_for(post.path) %>"></a>
-            </article>
-        <% }); %>
-    </div>
-    
-    <% if (page.total > 1) { %>
+<% if (site.posts && site.posts.length > 0) { %>
+  <div class="posts-list">
+    <% site.posts.sort('date', -1).limit(10).each(function(post) { %>
+      <article class="post-entry">
+        <% if (post.cover || theme.defaultCover) { %>
+          <header class="entry-header">
+            <h2><%= post.title || __('untitled') %></h2>
+          </header>
+          <div class="entry-cover">
+            <img src="<%= url_for(post.cover || theme.defaultCover) %>" alt="<%= post.title || __('untitled') %>">
+          </div>
+        <% } else { %>
+          <header class="entry-header">
+            <h2><%= post.title || __('untitled') %></h2>
+          </header>
+        <% } %>
+        <section class="entry-content">
+          <p><%= strip_html(post.excerpt || post.content).substring(0, 200).trim() %>...</p>
+        </section>
+        <footer class="entry-footer">
+          <% if (theme.showReadingTime) { %>
+            <span title="<%= __('post.reading_time') %>">
+              <%= Math.ceil(strip_html(post.content).length / 1000) %> <%= __('post.minute') %>
+            </span>
+          <% } %>
+          <span><%= date(post.date, 'YYYY-MM-DD') %></span>
+        </footer>
+        <a class="entry-link" aria-label="<%= __('post.read_more') %>: <%= post.title || __('untitled') %>" href="<%= url_for(post.path) %>"></a>
+      </article>
+    <% }); %>
+  </div>
+  
+  <% if (page.total > 1) { %>
     <footer class="page-footer">
-        <nav class="pagination">
-            <%- paginator({
-                prev_text: '<span class="prev-text">« ' + __('pagination.prev') + '</span>',
-                next_text: '<span class="next-text">' + __('pagination.next') + ' »</span>'
-            }) %>
-        </nav>
+      <nav class="pagination">
+        <%- paginator({
+          prev_text: '<span class="prev-text">« ' + __('pagination.prev') + '</span>',
+          next_text: '<span class="next-text">' + __('pagination.next') + ' »</span>'
+        }) %>
+      </nav>
     </footer>
-    <% } %>
+  <% } %>
 <% } else { %>
-    <div class="home-info">
-        <div class="home-info-title"><%= config.title %></div>
-        <div class="home-info-content"><%= config.description %></div>
-    </div>
+  <div class="home-info">
+    <div class="home-info-title"><%= config.title %></div>
+    <div class="home-info-content"><%= config.description %></div>
+  </div>
 <% } %>
